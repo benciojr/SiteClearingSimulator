@@ -55,13 +55,17 @@ Site Map
 For the site map, each block is assigned to have a specific row and column index. The first square block, which is located at the north west, has a row index of 0 and a column index of 0. The column index increases as you move to the next column on the right. Likewise, the row index also increases as you move down a row.
 
 Here is an example of the row and column index assignments for a site map with 5 rows and 5 columns:
-{
+
 [0,0], [0,1], [0,2], [0,3], [0,4],
+
 [1,0], [1,1], [1,2], [1,3], [1,4],
+
 [2,0], [2,1], [2,2], [2,3], [2,4],
+
 [3,0], [3,1], [3,2], [3,3], [3,4],
+
 [4,0], [4,1], [4,2], [4,3], [4,4]
-}
+
 
 The site blocks are stored in a HashMap with the row index and column index as key. Any key not found in the HashMap is considered out of the boundaries of the site map.
 

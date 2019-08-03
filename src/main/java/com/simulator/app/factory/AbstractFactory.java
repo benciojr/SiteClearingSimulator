@@ -1,7 +1,7 @@
 package com.simulator.app.factory;
 
-import com.simulator.app.exception.InvalidSiteMapException;
+import com.simulator.app.exception.FactoryException;
 
 public interface AbstractFactory<T> {
-    T create(String type) throws InvalidSiteMapException;
+    T create(String... parameters) throws FactoryException;
 }

@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.simulator.app.exception.AttemptToClearProtectedBlockException;
-import com.simulator.app.exception.InvalidSiteMapException;
+import com.simulator.app.exception.FactoryException;
 import com.simulator.app.factory.AbstractFactory;
 import com.simulator.app.factory.FactoryProvider;
 import com.simulator.app.model.siteblock.PlainBlock;
@@ -20,36 +20,36 @@ import com.simulator.app.util.ExpenseManager;
 
 public class ExpenseManagerTest {
 
-	private static int COMMUNICATION_COST_PER_UNIT = 1;
-	private static int FUEL_COST_PER_UNIT = 1;
-	private static int UNCLEARED_BLOCK_COST_PER_UNIT = 3;
-	private static int PROTECTED_TREE_COST_PER_UNIT = 10;
-	private static int DAMAGE_COST_PER_UNIT = 2;
+    private static final int COMMUNICATION_COST_PER_UNIT = 1;
+    private static final int FUEL_COST_PER_UNIT = 1;
+    private static final int UNCLEARED_BLOCK_COST_PER_UNIT = 3;
+    private static final int PROTECTED_TREE_COST_PER_UNIT = 10;
+    private static final int DAMAGE_COST_PER_UNIT = 2;
 
-	ExpenseManager expenseManager = null;
+    ExpenseManager expenseManager = null;
     @Before
     public void initialize() {
-    	expenseManager = new ExpenseManager();
+        expenseManager = new ExpenseManager();
     }
 
-	@Test
-	public void testCommunicationOverheadCost() {
-		int expected = 10;
-		expenseManager.setCommunicationOverheadQuantity(expected);
-		int actual = expenseManager.getCommunicationOverheadCost();
-		assertEquals("Communication Overhead", expected * COMMUNICATION_COST_PER_UNIT, actual);
-	}
+    @Test
+    public void testCommunicationOverheadCost() {
+        int expected = 10;
+        expenseManager.setCommunicationOverheadQuantity(expected);
+        int actual = expenseManager.getCommunicationOverheadCost();
+        assertEquals("Communication Overhead", expected * COMMUNICATION_COST_PER_UNIT, actual);
+    }
 
-	@Test
-	public void testFuelUsageCost() {
-		int expected = 10;
-		expenseManager.addFuelUsage(expected);
-		int actual = expenseManager.getFuelUsageCost();
-		assertEquals("Fuel Usage", expected * FUEL_COST_PER_UNIT, actual);
-	}
+    @Test
+    public void testFuelUsageCost() {
+        int expected = 10;
+        expenseManager.addFuelUsage(expected);
+        int actual = expenseManager.getFuelUsageCost();
+        assertEquals("Fuel Usage", expected * FUEL_COST_PER_UNIT, actual);
+    }
 
-	@Test
-	public void testUnclearedBlocksCost() throws InvalidSiteMapException, AttemptToClearProtectedBlockException {
+    @Test
+    public void testUnclearedBlocksCost() throws FactoryException, AttemptToClearProtectedBlockException {
         Map<List,SiteBlock> siteMap = new HashMap<List,SiteBlock>();
         AbstractFactory factory = FactoryProvider.getFactory("SiteBlock");
 
@@ -75,45 +75,45 @@ public class ExpenseManagerTest {
         currentBlock1.clearBlock();
         currentBlock2.clearBlock();
 
-		int expected = 3 * UNCLEARED_BLOCK_COST_PER_UNIT;
-		expenseManager.getUnclearedBlocksQuantity(siteMap);
-		int actual = expenseManager.getUnclearedBlocksCost();
-		assertEquals("Uncleared Blocks", expected, actual);
-	}
+        int expected = 3 * UNCLEARED_BLOCK_COST_PER_UNIT;
+        expenseManager.getUnclearedBlocksQuantity(siteMap);
+        int actual = expenseManager.getUnclearedBlocksCost();
+        assertEquals("Uncleared Blocks", expected, actual);
+    }
 
-	@Test
-	public void testDestructionOfProtectedTreeCost() {
-		int expected = 0;
-		expenseManager.setDestructionOfProtectedTree(false);
-		int actual = expenseManager.getDestructionOfProtectedTreeCost();
-		assertEquals("Destruction Of Protected Tree Cost", expected * PROTECTED_TREE_COST_PER_UNIT, actual);
+    @Test
+    public void testDestructionOfProtectedTreeCost() {
+        int expected = 0;
+        expenseManager.setDestructionOfProtectedTree(false);
+        int actual = expenseManager.getDestructionOfProtectedTreeCost();
+        assertEquals("Destruction Of Protected Tree Cost", expected * PROTECTED_TREE_COST_PER_UNIT, actual);
 
-		int expected2 = 1;
-		expenseManager.setDestructionOfProtectedTree(true);
-		int actual2 = expenseManager.getDestructionOfProtectedTreeCost();
-		assertEquals("Destruction Of Protected Tree Cost", expected2 * PROTECTED_TREE_COST_PER_UNIT, actual2);
-	}
+        int expected2 = 1;
+        expenseManager.setDestructionOfProtectedTree(true);
+        int actual2 = expenseManager.getDestructionOfProtectedTreeCost();
+        assertEquals("Destruction Of Protected Tree Cost", expected2 * PROTECTED_TREE_COST_PER_UNIT, actual2);
+    }
 
-	@Test
-	public void getPaintDamageCost() {
-		int expected = 3;
-		expenseManager.addPaintDamage();
-		expenseManager.addPaintDamage();
-		expenseManager.addPaintDamage();
-		int actual = expenseManager.getPaintDamageCost();
-		assertEquals("Paint Damage", expected * DAMAGE_COST_PER_UNIT, actual);
-	}
+    @Test
+    public void getPaintDamageCost() {
+        int expected = 3;
+        expenseManager.addPaintDamage();
+        expenseManager.addPaintDamage();
+        expenseManager.addPaintDamage();
+        int actual = expenseManager.getPaintDamageCost();
+        assertEquals("Paint Damage", expected * DAMAGE_COST_PER_UNIT, actual);
+    }
 
-	@Test
-	public void getTotalCost() {
-		int expected = 26;
-		expenseManager.setCommunicationOverheadQuantity(5);
-		expenseManager.addFuelUsage(5);
-		expenseManager.setDestructionOfProtectedTree(true);
-		expenseManager.addPaintDamage();
-		expenseManager.addPaintDamage();
-		expenseManager.addPaintDamage();
-		int actual = expenseManager.getTotalCost();
-		assertEquals("Total Cost", expected, actual);
-	}
+    @Test
+    public void getTotalCost() {
+        int expected = 26;
+        expenseManager.setCommunicationOverheadQuantity(5);
+        expenseManager.addFuelUsage(5);
+        expenseManager.setDestructionOfProtectedTree(true);
+        expenseManager.addPaintDamage();
+        expenseManager.addPaintDamage();
+        expenseManager.addPaintDamage();
+        int actual = expenseManager.getTotalCost();
+        assertEquals("Total Cost", expected, actual);
+    }
 }

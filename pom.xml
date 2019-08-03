@@ -41,7 +41,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>com.simulator.app.SiteClearingSimulator</mainClass>
+              <mainClass>com.simulator.app.ApplicationMain</mainClass>
             </manifest>
           </archive>
         </configuration>

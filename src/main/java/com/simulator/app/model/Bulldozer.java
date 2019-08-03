@@ -6,8 +6,17 @@ public class Bulldozer {
     private int rowIndex;
     private Direction direction;
 
-    public Bulldozer() {
-    	this(Direction.EAST, -1, 0);
+    private static Bulldozer instance = null;
+
+    public static Bulldozer getInstance() {
+        if (instance == null) {
+            synchronized(Bulldozer.class) {
+                if (instance == null) {
+                    instance = new Bulldozer(Direction.EAST, -1, 0);
+                }
+            }
+        }
+        return instance;
     }
 
     private Bulldozer(Direction direction, int columnIndex, int rowIndex) {

@@ -1,10 +1,12 @@
 package com.simulator.app.model.siteblock;
-import com.simulator.app.exception.InvalidSiteMapException;
+
+import com.simulator.app.exception.FactoryException;
 import com.simulator.app.factory.AbstractFactory;
 
 public class SiteBlockFactory implements AbstractFactory<SiteBlock> {
     @Override
-    public SiteBlock create(String siteBlockType) throws InvalidSiteMapException {
+    public SiteBlock create(String... param) throws FactoryException {
+        String siteBlockType = param[0];
         if ("o".equals(siteBlockType)) {
             return new PlainBlock();
         } else if ("r".equals(siteBlockType)) {
@@ -14,7 +16,7 @@ public class SiteBlockFactory implements AbstractFactory<SiteBlock> {
         } else if ("T".equals(siteBlockType)) {
             return new ProtectedBlock();
         } else {
-        	throw new InvalidSiteMapException("Invalid site block type - " + siteBlockType + ". Only valid site block types are: o, r, t, and T.");
+            throw new FactoryException("Invalid site block type - " + siteBlockType + ". Only valid site block types are: o, r, t, and T.");
         }
     }
 }

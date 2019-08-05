@@ -38,9 +38,11 @@ The two files shown in the examples above can be used for testing. Both files ar
 
 DESIGN AND APPROACH
 
+ApplicationMain is the entry point to run the application and runs the main class of the simulator - the SiteClearingSimulator class. It also calls the ArgumentParser class to parse the arguments passed to the application, checks if the file exists, and returns a File object whenever it is valid.
+
 SiteClearingSimulator
 
-The SiteClearingSimulator class is the main entry point of the application. It has methods to read the data from the input text file, to start the actual simulation, and to display the report after the simulation has ended. The loadDataFromFile() method instantiates the correct SiteBlock class, and stores them into a HashMap that represents the site map. The startSimulation() method is where the application asks the user input for commands.
+The SiteClearingSimulator class is the main class of the simulator. It has methods to read the data from the input text file, to start the actual simulation, and to display the report after the simulation has ended. The loadDataFromFile() method calls the SiteMapLoader that validates the input text file, instantiates the appropriate SiteBlock class, and stores them into a HashMap that represents the site map. The startSimulation() method is where the application asks the user input for commands. The CommandManager is assigned for this task of reading the user's input, validation and execution of the commands.
 
 
 Square Blocks
@@ -80,4 +82,11 @@ ExpenseManager
 The ExpenseManager class keeps track of the expenses and computes the total costs for the simulation.
 
 
+Exceptions
+
+There are three exceptions created for the application to handle errors encountered during the simulation: AttemptToClearProtectedBlockException, AttemptToNavigateBeyondBoundaryException, and FactoryException.
+
+The exceptions AttemptToClearProtectedBlockException and AttemptToNavigateBeyondBoundaryException, respectively, are thrown whenever the user has tried to enter a site block that is protected, and whenever the user tried to go beyond the site map.
+
+The FactoryException on the other hand, is thrown whenever an error is encountered during instantiation of a Command or a SiteBlock. An example of when the FactoryException might be thrown is when the user input entered is invalid, or the square block type read from the input file is invalid.
 
